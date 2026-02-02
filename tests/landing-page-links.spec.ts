@@ -43,4 +43,9 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   await expect(page.getByTestId("helmet-wrapper")).not.toHaveClass(
     /animate-float-bob/
   );
+
+  await page.getByRole("button", { name: "Open App" }).nth(1).click();
+  await expect(
+    page.getByRole("img", { name: "Seal of approval" })
+  ).toBeVisible();
 });

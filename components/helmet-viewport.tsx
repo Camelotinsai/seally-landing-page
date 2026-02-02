@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Shield, Zap, CheckCircle } from "lucide-react";
+import { Shield, Zap } from "lucide-react";
 
 interface HelmetViewportProps {
   mode: "fast" | "sealed";
@@ -93,10 +93,15 @@ export function HelmetViewport({
 
         {/* Verified stamp */}
         {showVerified && (
-          <div className="animate-stamp-pop absolute inset-0 z-20 flex items-center justify-center">
-            <div className="verified-stamp">
-              <CheckCircle className="h-5 w-5" />
-              <span className="text-sm">VERIFIED</span>
+          <div className="absolute inset-0 z-20 flex items-center justify-center">
+            <div className="animate-stamp-pop">
+              <Image
+                src="/images/seal_of_approval.png"
+                alt="Seal of approval"
+                width={140}
+                height={140}
+                className="drop-shadow-[4px_4px_0_rgba(0,0,0,0.25)]"
+              />
             </div>
           </div>
         )}
