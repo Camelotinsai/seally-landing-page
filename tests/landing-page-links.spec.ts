@@ -71,7 +71,7 @@ test("app links point to swap/lending/agent", async ({ page }) => {
     has: page.getByRole("heading", { name: "Products" }),
   });
   const dexTab = productsSection.getByRole("button", { name: /DEX/ });
-  await expect(dexTab).toContainText(/Coming Soon/);
+  await expect(dexTab).not.toContainText(/Coming Soon/);
 
   const dexCard = productsSection.locator(".sticker-card", {
     hasText: "Seally DEX",
