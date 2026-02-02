@@ -28,29 +28,26 @@ export function HelmetViewport({
   const isSealed = mode === "sealed";
 
   return (
-    <div className="relative mx-auto w-full max-w-sm animate-float-bob">
+    <div
+      className="relative mx-auto w-full max-w-sm"
+      data-testid="helmet-wrapper"
+    >
       {/* Outer container - chunky sticker card */}
       <div
-        className="relative aspect-square overflow-hidden rounded-[28px] transition-all duration-500"
+        className="relative aspect-square overflow-hidden rounded-[28px]"
+        data-testid="helmet-frame"
         style={{
-          background: isSealed 
-            ? "linear-gradient(145deg, oklch(0.21 0.02 295), oklch(0.17 0.016 298))"
-            : "linear-gradient(145deg, oklch(0.23 0.022 295), oklch(0.19 0.018 295))",
-          border: isSealed
-            ? "3px solid oklch(0.68 0.12 350 / 0.5)"
-            : "3px solid var(--border)",
-          boxShadow: isSealed
-            ? "6px 6px 0 0 oklch(0.68 0.12 350 / 0.2)"
-            : "5px 5px 0 0 oklch(0 0 0 / 0.25)",
+          background:
+            "linear-gradient(145deg, oklch(0.23 0.022 295), oklch(0.19 0.018 295))",
+          border: "3px solid var(--border)",
+          boxShadow: "5px 5px 0 0 oklch(0 0 0 / 0.25)",
         }}
       >
         {/* Inner ring */}
         <div
-          className="absolute inset-4 rounded-3xl transition-all duration-500"
+          className="absolute inset-4 rounded-3xl"
           style={{
-            border: isSealed
-              ? "2px solid oklch(0.68 0.12 350 / 0.3)"
-              : "2px solid var(--border)",
+            border: "2px solid var(--border)",
           }}
         />
 
@@ -58,27 +55,20 @@ export function HelmetViewport({
         <div className="absolute inset-10 overflow-hidden rounded-full bg-background border-3 border-border">
           <div className="relative h-full w-full">
             <Image
-              src="/images/seal_wif_hat.png"
+              src={isSealed ? "/images/ski_mask.png" : "/images/seal_wif_hat.png"}
               alt="Seally"
               fill
-              className={`object-cover transition-all duration-500 ${
-                isSealed ? "scale-105" : "scale-100"
-              }`}
-              style={{
-                filter: isSealed
-                  ? "brightness(0.75) saturate(0.9)"
-                  : "brightness(0.95) saturate(1)",
-              }}
+              className="object-cover"
+              style={{ filter: "brightness(0.95) saturate(1)" }}
               priority
             />
 
             {/* Haze overlay - pink tinted for sealed */}
             <div
-              className="absolute inset-0 transition-all duration-500"
+              className="absolute inset-0"
               style={{
-                background: isSealed
-                  ? "radial-gradient(circle at center, oklch(0.68 0.12 350 / 0.15), oklch(0.14 0.012 300 / 0.5) 70%)"
-                  : "radial-gradient(circle at center, transparent 40%, oklch(0.14 0.012 300 / 0.2) 100%)",
+                background:
+                  "radial-gradient(circle at center, transparent 40%, oklch(0.14 0.012 300 / 0.2) 100%)",
               }}
             />
 

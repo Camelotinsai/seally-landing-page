@@ -28,4 +28,19 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "Open App" }).first()
   ).toHaveClass(/cursor-pointer/);
+
+  const frame = page.getByTestId("helmet-frame");
+  const beforeStyle = await frame.getAttribute("style");
+
+  await frame.getByRole("button", { name: "Sealed" }).click();
+
+  const afterStyle = await frame.getAttribute("style");
+  expect(afterStyle).toBe(beforeStyle);
+
+  const image = frame.getByRole("img", { name: "Seally" });
+  await expect(image).toHaveAttribute("src", /ski_mask\.png/);
+
+  await expect(page.getByTestId("helmet-wrapper")).not.toHaveClass(
+    /animate-float-bob/
+  );
 });
