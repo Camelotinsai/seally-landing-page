@@ -68,4 +68,24 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   await expect(
     page.getByRole("img", { name: "Seal of approval" })
   ).toBeVisible();
+
+  await expect(
+    page.getByRole("heading", { name: "One App. Two Modes." })
+  ).toBeVisible();
+
+  const fastCard = page.getByRole("heading", { name: "FAST" }).first();
+  await expect(fastCard).toBeVisible();
+  await expect(page.getByText("STANDARD EXECUTION")).toBeVisible();
+  await expect(page.getByText("Direct Routing (Raydium)")).toBeVisible();
+  await expect(page.getByText("Max Speed (400ms)")).toBeVisible();
+  await expect(page.getByText("Public Visibility")).toBeVisible();
+
+  const sealedCard = page.getByRole("heading", { name: "SEALED" }).first();
+  await expect(sealedCard).toBeVisible();
+  await expect(page.getByText("PRIVACY-PRESERVING")).toBeVisible();
+  await expect(page.getByText("Agentic TEE Routing")).toBeVisible();
+  await expect(page.getByText("MagicBlock Ephemeral Rollup")).toBeVisible();
+  await expect(page.getByText("Reduced Linkability")).toBeVisible();
+  await expect(page.getByText("Verified by Seal")).toBeVisible();
+  await expect(page.getByText("Powered by Inco + Arcium")).toBeVisible();
 });
