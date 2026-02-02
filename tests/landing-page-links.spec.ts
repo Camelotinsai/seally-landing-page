@@ -7,7 +7,7 @@ test("app links point to swap/lending/agent", async ({ page }) => {
 
   await expect(
     page.getByRole("link", { name: /Seally DEX/i })
-  ).toHaveAttribute("href", "https://swap.seally.app");
+  ).toHaveCount(0);
 
   await expect(
     page.getByRole("link", { name: /Seally Lending/i })
@@ -17,9 +17,7 @@ test("app links point to swap/lending/agent", async ({ page }) => {
     page.getByRole("link", { name: /Seally Agent/i })
   ).toHaveAttribute("href", "https://agent.seally.app");
 
-  await expect(
-    page.getByRole("link", { name: /Open DEX/i })
-  ).toHaveAttribute("href", "https://swap.seally.app");
+  await expect(page.getByRole("link", { name: /Open DEX/i })).toHaveCount(0);
 
   await expect(page.getByRole("button", { name: "DEX" })).toHaveClass(
     /cursor-pointer/
@@ -76,9 +74,9 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   await expect(dexTab).toContainText(/Coming Soon/);
 
   const dexCard = productsSection.locator(".sticker-card", {
-    has: productsSection.getByRole("heading", { name: "Seally DEX" }),
+    hasText: "Seally DEX",
   });
-  await expect(dexCard.getByText("Coming Soon")).toBeVisible();
+  await expect(dexCard).toContainText("Coming Soon");
   await expect(
     productsSection.getByRole("link", { name: /Open DEX/i })
   ).toHaveCount(0);

@@ -12,9 +12,10 @@ const products = [
     description: "Swap tokens with reduced pre-trade exposure.",
     micro: "swap in peace, fren",
     features: ["FAST or SEALED execution modes", "Minimized transaction footprint"],
-    status: "BETA",
+    status: "Coming Soon",
     cta: "Open DEX",
     href: "https://swap.seally.app",
+    comingSoon: true,
   },
   {
     id: "lending",
@@ -79,6 +80,11 @@ export function Products() {
                 }`}
               >
                 {product.name}
+                {product.comingSoon && (
+                  <span className="ml-2 inline-flex items-center rounded-full border border-primary/40 bg-primary/15 px-2 py-0.5 text-[0.6rem] font-extrabold uppercase tracking-wide text-primary">
+                    Coming Soon
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -115,19 +121,23 @@ export function Products() {
             </ul>
 
             <div>
-              <Button
-                asChild
-                className="pill-btn bg-primary text-primary-foreground font-bold hover:bg-primary/90 px-8"
-              >
-                <a
-                  href={activeProduct.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {activeProduct.comingSoon ? (
+                <span className="sticker-badge">Coming Soon</span>
+              ) : (
+                <Button
+                  asChild
+                  className="pill-btn bg-primary text-primary-foreground font-bold hover:bg-primary/90 px-8"
                 >
-                  {activeProduct.cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
+                  <a
+                    href={activeProduct.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {activeProduct.cta}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
         )}
