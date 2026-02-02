@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Shield, Zap } from "lucide-react";
 
@@ -24,8 +24,30 @@ export function HelmetViewport({
       duration: 4 + Math.random() * 2,
     }))
   );
+  const [displayMode, setDisplayMode] = useState<"fast" | "sealed">(mode);
+  const [transitionSrc, setTransitionSrc] = useState<string | null>(null);
+  const hasMountedRef = useRef(false);
 
   const isSealed = mode === "sealed";
+  const displayIsSealed = displayMode === "sealed";
+
+  useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+
+    const nextSrc =
+      mode === "sealed"
+        ? "/videos/switch_to_skimask.mp4"
+        : "/videos/switch_to_hat.mp4";
+    setTransitionSrc(nextSrc);
+  }, [mode]);
+
+  const handleTransitionEnd = () => {
+    setTransitionSrc(null);
+    setDisplayMode(mode);
+  };
 
   return (
     <div
@@ -55,13 +77,30 @@ export function HelmetViewport({
         <div className="absolute inset-10 overflow-hidden rounded-full bg-background border-3 border-border">
           <div className="relative h-full w-full">
             <Image
-              src={isSealed ? "/images/ski_mask.png" : "/images/seal_wif_hat.png"}
+              src={
+                displayIsSealed
+                  ? "/images/ski_mask.png"
+                  : "/images/seal_wif_hat.png"
+              }
               alt="Seally"
               fill
               className="object-cover"
               style={{ filter: "brightness(0.95) saturate(1)" }}
               priority
             />
+
+            {transitionSrc && (
+              <video
+                key={transitionSrc}
+                className="absolute inset-0 h-full w-full object-cover"
+                data-testid="helmet-transition"
+                src={transitionSrc}
+                autoPlay
+                muted
+                playsInline
+                onEnded={handleTransitionEnd}
+              />
+            )}
 
             {/* Haze overlay - pink tinted for sealed */}
             <div
