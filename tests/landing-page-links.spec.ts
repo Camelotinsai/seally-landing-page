@@ -34,6 +34,15 @@ test("app links point to swap/lending/agent", async ({ page }) => {
 
   await frame.getByRole("button", { name: "Sealed" }).click();
 
+  const toSealedVideo = frame.getByTestId("helmet-transition");
+  await expect(toSealedVideo).toHaveAttribute(
+    "src",
+    /switch_to_skimask\.mp4/
+  );
+  await toSealedVideo.evaluate((video) => {
+    video.dispatchEvent(new Event("ended"));
+  });
+
   const afterStyle = await frame.getAttribute("style");
   expect(afterStyle).toBe(beforeStyle);
 
@@ -43,6 +52,14 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   await expect(page.getByTestId("helmet-wrapper")).not.toHaveClass(
     /animate-float-bob/
   );
+
+  await frame.getByRole("button", { name: "Fast" }).click();
+  const toFastVideo = frame.getByTestId("helmet-transition");
+  await expect(toFastVideo).toHaveAttribute("src", /switch_to_hat\.mp4/);
+  await toFastVideo.evaluate((video) => {
+    video.dispatchEvent(new Event("ended"));
+  });
+  await expect(image).toHaveAttribute("src", /seal_wif_hat\.png/);
 
   await page.getByRole("button", { name: "Open App" }).nth(1).click();
   await expect(
