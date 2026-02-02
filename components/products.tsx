@@ -72,7 +72,7 @@ export function Products() {
               <button
                 key={product.id}
                 onClick={() => setActiveTab(product.id)}
-                className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-200 ${
+                className={`cursor-pointer rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-200 ${
                   activeTab === product.id
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"

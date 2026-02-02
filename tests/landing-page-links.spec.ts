@@ -20,4 +20,12 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: /Open DEX/i })
   ).toHaveAttribute("href", "https://swap.seally.app");
+
+  await expect(page.getByRole("button", { name: "DEX" })).toHaveClass(
+    /cursor-pointer/
+  );
+
+  await expect(
+    page.getByRole("button", { name: "Open App" }).first()
+  ).toHaveClass(/cursor-pointer/);
 });
