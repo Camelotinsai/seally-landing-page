@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HelmetViewport } from "@/components/helmet-viewport";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
@@ -12,9 +12,21 @@ interface HeroProps {
 export function Hero({ onOpenApp }: HeroProps) {
   const [mode, setMode] = useState<"fast" | "sealed">("fast");
   const [showVerified, setShowVerified] = useState(false);
+  const toggleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scheduleNextToggle = () => {
+    if (toggleTimeoutRef.current) {
+      clearTimeout(toggleTimeoutRef.current);
+    }
+    toggleTimeoutRef.current = setTimeout(() => {
+      setMode((prev) => (prev === "fast" ? "sealed" : "fast"));
+      scheduleNextToggle();
+    }, 5000);
+  };
 
   const handleModeChange = (newMode: "fast" | "sealed") => {
     setMode(newMode);
+    scheduleNextToggle();
   };
 
   const handleOpenApp = () => {
@@ -24,6 +36,15 @@ export function Hero({ onOpenApp }: HeroProps) {
       onOpenApp?.();
     }, 1400);
   };
+
+  useEffect(() => {
+    scheduleNextToggle();
+    return () => {
+      if (toggleTimeoutRef.current) {
+        clearTimeout(toggleTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section className="relative min-h-screen pt-24 pb-16">
