@@ -69,6 +69,24 @@ test("app links point to swap/lending/agent", async ({ page }) => {
     page.getByRole("img", { name: "Seal of approval" })
   ).toBeVisible();
 
+  const productsSection = page.locator("section", {
+    has: page.getByRole("heading", { name: "Products" }),
+  });
+  const dexTab = productsSection.getByRole("button", { name: /DEX/ });
+  await expect(dexTab).toContainText(/Coming Soon/);
+
+  const dexCard = productsSection.locator(".sticker-card", {
+    has: productsSection.getByRole("heading", { name: "Seally DEX" }),
+  });
+  await expect(dexCard.getByText("Coming Soon")).toBeVisible();
+  await expect(
+    productsSection.getByRole("link", { name: /Open DEX/i })
+  ).toHaveCount(0);
+
+  const nav = page.locator("nav");
+  await expect(nav.getByRole("link", { name: /Seally DEX/i })).toHaveCount(0);
+  await expect(nav.getByText("Coming Soon")).toBeVisible();
+
   await expect(
     page.getByRole("heading", { name: "One App. Two Modes." })
   ).toBeVisible();
