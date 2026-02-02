@@ -37,6 +37,7 @@ export function HelmetViewport({
       return;
     }
 
+    setDisplayMode(mode);
     const nextSrc =
       mode === "sealed"
         ? "/videos/switch_to_skimask.mp4"
@@ -85,7 +86,7 @@ export function HelmetViewport({
               alt="Seally"
               fill
               className="object-cover"
-              style={{ filter: "brightness(0.95) saturate(1)" }}
+              style={{ filter: "none" }}
               priority
             />
 
@@ -173,12 +174,6 @@ export function HelmetViewport({
           </div>
         </div>
 
-        {/* Mode label - sticker badge */}
-        <div className="absolute top-5 left-5 z-10">
-          <span className="sticker-badge">
-            {isSealed ? "SEALED" : "FAST"}
-          </span>
-        </div>
       </div>
 
       {/* Description */}
