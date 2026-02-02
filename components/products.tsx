@@ -80,11 +80,6 @@ export function Products() {
                 }`}
               >
                 {product.name}
-                {product.comingSoon && (
-                  <span className="ml-2 inline-flex items-center rounded-full border border-primary/40 bg-primary/15 px-2 py-0.5 text-[0.6rem] font-extrabold uppercase tracking-wide text-primary">
-                    Coming Soon
-                  </span>
-                )}
               </button>
             ))}
           </div>
