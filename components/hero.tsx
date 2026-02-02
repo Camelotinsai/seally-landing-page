@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HelmetViewport } from "@/components/helmet-viewport";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
@@ -9,24 +9,31 @@ interface HeroProps {
   onOpenApp?: () => void;
 }
 
+const AUTO_TOGGLE_DELAY_MS = 7000;
+
 export function Hero({ onOpenApp }: HeroProps) {
   const [mode, setMode] = useState<"fast" | "sealed">("fast");
   const [showVerified, setShowVerified] = useState(false);
   const toggleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const scheduleNextToggle = () => {
+  const clearNextToggle = useCallback(() => {
     if (toggleTimeoutRef.current) {
       clearTimeout(toggleTimeoutRef.current);
+      toggleTimeoutRef.current = null;
     }
+  }, []);
+
+  const scheduleNextToggle = useCallback(() => {
+    clearNextToggle();
     toggleTimeoutRef.current = setTimeout(() => {
       setMode((prev) => (prev === "fast" ? "sealed" : "fast"));
-      scheduleNextToggle();
-    }, 5000);
-  };
+    }, AUTO_TOGGLE_DELAY_MS);
+  }, [clearNextToggle]);
 
   const handleModeChange = (newMode: "fast" | "sealed") => {
+    if (newMode === mode) return;
+    clearNextToggle();
     setMode(newMode);
-    scheduleNextToggle();
   };
 
   const handleOpenApp = () => {
@@ -40,11 +47,9 @@ export function Hero({ onOpenApp }: HeroProps) {
   useEffect(() => {
     scheduleNextToggle();
     return () => {
-      if (toggleTimeoutRef.current) {
-        clearTimeout(toggleTimeoutRef.current);
-      }
+      clearNextToggle();
     };
-  }, []);
+  }, [clearNextToggle, scheduleNextToggle]);
 
   return (
     <section className="relative min-h-screen pt-24 pb-16">
@@ -129,6 +134,7 @@ export function Hero({ onOpenApp }: HeroProps) {
           <HelmetViewport
             mode={mode}
             onModeChange={handleModeChange}
+            onTransitionEnd={scheduleNextToggle}
             showVerified={showVerified}
           />
         </div>

@@ -8,12 +8,14 @@ interface HelmetViewportProps {
   mode: "fast" | "sealed";
   onModeChange: (mode: "fast" | "sealed") => void;
   showVerified?: boolean;
+  onTransitionEnd?: () => void;
 }
 
 export function HelmetViewport({
   mode,
   onModeChange,
   showVerified = false,
+  onTransitionEnd,
 }: HelmetViewportProps) {
   const [bubbles] = useState(() =>
     Array.from({ length: 4 }, (_, i) => ({
@@ -48,6 +50,7 @@ export function HelmetViewport({
   const handleTransitionEnd = () => {
     setTransitionSrc(null);
     setDisplayMode(mode);
+    onTransitionEnd?.();
   };
 
   return (

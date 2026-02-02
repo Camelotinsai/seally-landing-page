@@ -93,10 +93,19 @@ test("app links point to swap/lending/agent", async ({ page }) => {
   const autoImage = autoFrame.getByRole("img", { name: "Seally" });
 
   await autoFrame.getByRole("button", { name: "Sealed" }).click();
+  const autoVideo = autoFrame.getByTestId("helmet-transition");
+  await autoVideo.evaluate((video) => {
+    video.dispatchEvent(new Event("ended"));
+  });
   await expect(autoImage).toHaveAttribute("src", /ski_mask\.png/);
 
   await page.waitForTimeout(5200);
-  await expect(autoImage).toHaveAttribute("src", /seal_wif_hat\.png/);
+  const srcAfterFive = await autoImage.getAttribute("src");
+  expect(srcAfterFive).toMatch(/ski_mask\.png/);
+
+  await page.waitForTimeout(2500);
+  const srcAfterSeven = await autoImage.getAttribute("src");
+  expect(srcAfterSeven).toMatch(/seal_wif_hat\.png/);
 
   const fastCard = page.getByRole("heading", { name: "FAST" }).first();
   await expect(fastCard).toBeVisible();
