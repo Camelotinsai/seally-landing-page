@@ -115,23 +115,19 @@ export function Products() {
             </ul>
 
             <div>
-              {activeProduct.comingSoon ? (
-                <span className="sticker-badge">Coming Soon</span>
-              ) : (
-                <Button
-                  asChild
-                  className="pill-btn bg-primary text-primary-foreground font-bold hover:bg-primary/90 px-8"
+              <Button
+                asChild
+                className="pill-btn bg-primary text-primary-foreground font-bold hover:bg-primary/90 px-8"
+              >
+                <a
+                  href={activeProduct.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <a
-                    href={activeProduct.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {activeProduct.cta}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
+                  {activeProduct.cta}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
             </div>
           </div>
         )}
