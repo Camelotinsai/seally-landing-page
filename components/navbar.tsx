@@ -95,7 +95,12 @@ export function Navbar({ onOpenApp }: NavbarProps) {
 
                   <div className="p-3 space-y-2">
                     {/* DEX */}
-                    <div className="flex w-full items-start gap-3 rounded-2xl p-3 text-left border-2 border-transparent">
+                    <a
+                      href="https://swap.seally.app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-start gap-3 rounded-2xl p-3 text-left transition-all hover:bg-secondary border-2 border-transparent hover:border-primary/20"
+                    >
                       <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 border-2 border-primary/30">
                         <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
@@ -104,11 +109,12 @@ export function Navbar({ onOpenApp }: NavbarProps) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-foreground">Seally DEX</span>
-                          <span className="sticker-badge">Coming Soon</span>
+                          <span className="sticker-badge">BETA</span>
                         </div>
                         <p className="mt-0.5 text-sm text-muted-foreground">swap in peace, fren</p>
                       </div>
-                    </div>
+                      <ExternalLink className="mt-1 h-4 w-4 text-muted-foreground" />
+                    </a>
 
                     {/* Lending */}
                     <a

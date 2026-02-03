@@ -12,10 +12,9 @@ const products = [
     description: "Swap tokens with reduced pre-trade exposure.",
     micro: "swap in peace, fren",
     features: ["FAST or SEALED execution modes", "Minimized transaction footprint"],
-    status: "Coming Soon",
+    status: "BETA",
     cta: "Open DEX",
     href: "https://swap.seally.app",
-    comingSoon: true,
   },
   {
     id: "lending",
